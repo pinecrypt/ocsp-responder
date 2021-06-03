@@ -1,0 +1,6 @@
+[flake8]
+inline-quotes = "
+multiline-quotes = """
+indent-size = 4
+max-line-length = 160
+ignore = Q003 E128 E704 E731

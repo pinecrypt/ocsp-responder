@@ -1,0 +1,9 @@
+[general]
+ignore=body-is-missing,T3
+ignore-stdin=true
+
+[title-match-regex]
+regex=[A-Z]
+
+[author-valid-email]
+regex=[^@]+@pinecrypt.com
