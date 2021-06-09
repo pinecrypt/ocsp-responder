@@ -11,6 +11,7 @@ from oscrypto import asymmetric
 from prometheus_client import Counter, Histogram
 from sanic import Sanic, response
 from sanic_prometheus import monitor
+from time import sleep
 
 ocsp_request_valid = Counter("pinecrypt_ocsp_request_valid",
     "Valid OCSP requests")
@@ -29,10 +30,16 @@ ocsp_response_status = Counter("pinecrypt_ocsp_response_status",
 app = Sanic("events")
 monitor(app).expose_endpoint()
 
-
-# Load CA certificate
-with open("/server-secrets/ca_cert.pem", "rb") as fh:
-    authority_cert = asymmetric.load_certificate(fh.read())
+while True:
+    try:
+        # Load CA certificate
+        with open("/server-secrets/ca_cert.pem", "rb") as fh:
+            authority_cert = asymmetric.load_certificate(fh.read())
+    except FileNotFoundError:
+        sleep(1)
+        continue
+    else:
+        break
 
 # Load CA private key
 with open("/authority-secrets/ca_key.pem", "rb") as fh:
