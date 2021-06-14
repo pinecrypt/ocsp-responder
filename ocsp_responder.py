@@ -13,19 +13,25 @@ from sanic import Sanic, response
 from sanic_prometheus import monitor
 from time import sleep
 
-ocsp_request_valid = Counter("pinecrypt_ocsp_request_valid",
+ocsp_request_valid = Counter(
+    "pinecrypt_gateway_ocsp_request_valid",
     "Valid OCSP requests")
-ocsp_request_list_size = Histogram("pinecrypt_ocsp_request_list_size",
+ocsp_request_list_size = Histogram(
+    "pinecrypt_gateway_ocsp_request_list_size",
     "Histogram of OCSP request list size",
     buckets=(1, 2, 3, inf))
-ocsp_request_size_bytes = Histogram("pinecrypt_ocsp_request_size_bytes",
+ocsp_request_size_bytes = Histogram(
+    "pinecrypt_gateway_ocsp_request_size_bytes",
     "Histogram of OCSP request size in bytes",
     buckets=(100, 200, 500, 1000, 2000, 5000, 10000, inf))
-ocsp_request_nonces = Histogram("pinecrypt_ocsp_request_nonces",
+ocsp_request_nonces = Histogram(
+    "pinecrypt_gateway_ocsp_request_nonces",
     "Histogram of nonce count per request",
     buckets=(1, 2, 3, inf))
-ocsp_response_status = Counter("pinecrypt_ocsp_response_status",
-    "Status responses", ["status"])
+ocsp_response_status = Counter(
+    "pinecrypt_gateway_ocsp_response_status",
+    "Status responses",
+    ["status"])
 
 app = Sanic("events")
 monitor(app).expose_endpoint()
